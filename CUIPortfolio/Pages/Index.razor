@@ -1,0 +1,124 @@
+﻿@page "/"
+@inject IJSRuntime JSRuntime;
+<p>Welcome to My CUIFoo app.</p>
+<BarParTime Time="0.5"></BarParTime>
+@foreach (var item in console.ToList())
+{
+    @if (commands.Contains(item))
+    {
+        @*コマンド入力時*@
+        <div class="console">
+            <span style="color:gold">atria </span>
+            <span style="color:red">$</span>
+            <span style="color:@Setting.commandColor">@item</span>
+        </div>
+        <div class="console">
+            @*ここにコマンド出力*@
+            @switch (item)
+            {
+                case "help":
+                    <Help></Help>
+                    break;
+                case "bio":
+                    <Bio></Bio>
+                    break;
+                case "cls":
+                    Cls();
+                    break;
+                case "works":
+                    <Works></Works>
+                    break;
+                case "todomanager":
+                    <Todomanager></Todomanager>
+                    break;
+                case "twd3":
+                    <Twd3></Twd3>
+                    break;
+                case "daggerbreak":
+                    <Daggerbreak></Daggerbreak>
+                    break;
+                case "info":
+                    <Info></Info>
+                    break;
+            }
+        </div>
+    }
+    else
+    {
+        @*コマンド以外入力時*@
+        <div class="console">
+            <span style="color:gold">atria </span>
+            <span style="color:red">$</span>
+            @if (item == "")
+            {
+                @*入力バー(最終行のみ)*@
+                <span><input id="commandLine" style="color:@inputColor" autocomplete="off" maxlength="30" type="url" @bind="inputV" @onkeyup="NextLine" @bind:event="oninput" /></span>
+            }
+            else
+            {
+                <span style="color:white">@item</span>
+
+                @if (item != "")
+                {
+                    <div>
+                        <span style="color:white">@item : Unknown Command. Recommend "help".</span>
+                    </div>
+                }
+            }
+        </div>
+    }
+}
+
+@code{
+    string[] commands = { "help", "bio", "cls", "works", "todomanager", "twd3", "daggerbreak" ,"info"};
+    // ""が入力待ち行を示す
+    List<string> console = new List<string>() { "" };
+    string inputV;
+    string inputColor = "white";
+    private void NextLine(KeyboardEventArgs args)
+    {
+        if (args.Key == "Enter")
+        {
+            if (inputV == "") return;
+            AddConsole();
+            StateHasChanged();
+        }
+    }
+
+    /// <summary>
+    /// inputVをListに挿入する関数
+    /// </summary>
+    private void AddConsole()
+    {
+        console.Insert(console.Count - 1, inputV);
+        inputV = "";//input内を空に初期化
+    }
+
+    private void ChangeColorWithCommand()
+    {
+        if (commands.Contains(inputV))
+        {
+            inputColor = "skyblue";
+        }
+        else inputColor = "white";
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+        }
+        ChangeColorWithCommand();
+        //次の行に自動で移動する
+        //内部的には次のinputにFocus()しているのみなので、ボタンクリックなどに支障はない(はず)
+        await JSRuntime.InvokeVoidAsync("focusCommandLine");
+        await JSRuntime.InvokeVoidAsync("autoScroll");
+    }
+
+    private void Cls()
+    {
+        console.Clear();
+        console.Add("");
+        StateHasChanged();
+    }
+}

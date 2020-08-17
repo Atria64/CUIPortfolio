@@ -1,0 +1,17 @@
+﻿<p class="console" style="color:limegreen">| Works</p>
+@foreach (var item in works)
+{
+    <p class="console" style="color:navajowhite">
+        |- @item.Name (@item.Language[0]) :
+        <span class="console">@item.Description</span>
+        <span class="console" style="color:skyblue;">[cmd : @item.Command]</span>
+    </p>
+}
+
+@code {
+    private List<Work> works = new List<Work>(){
+        new Work("ToDoManager",new List<string>(){"C#,Html+razor","css","JavaScript"},"Blazor製タスク管理Webアプリ","todomanager"),
+        new Work("TwD3",new List<string>(){"JavaScript"},"TweetDeckの2窓検知を行うGoogleChrome拡張","twd3"),
+        new Work("Dagger Break",new List<string>(){"Processing"},"ブロック崩しゲーム","daggerbreak"),
+    };
+}

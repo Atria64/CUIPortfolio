@@ -1,0 +1,6 @@
+﻿<p class="console">@asmName.Name.ToString() Ver:@asmName.Version.ToString()</p>
+
+@code {
+    static private System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+    static private System.Reflection.AssemblyName asmName = assembly.GetName();
+}

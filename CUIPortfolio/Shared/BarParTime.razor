@@ -1,0 +1,29 @@
+﻿<span>@bar</span>
+
+@code {
+    [Parameter]
+    public double Time { get; set; }
+
+    string bar = "[]";
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            TimeCount();
+        }
+    }
+
+    private async void TimeCount()
+    {
+        Console.WriteLine("Hoge");
+        for (int i = 0; i < 25; i++)
+        {
+            bar = bar.Insert(1,"/");
+            await Task.Delay((int)(40*Time));
+            StateHasChanged();
+        }
+        bar += " Complete!";
+        StateHasChanged();
+    }
+}

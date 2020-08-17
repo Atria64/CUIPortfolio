@@ -1,0 +1,33 @@
+﻿.console{
+    margin:0px 0px 5px 0px;
+    color:white;
+}
+body {
+    background:black;
+}
+p{
+    color:white;
+}
+input {
+    background: black;
+    border: none;
+    color: white;
+    outline: none;
+    width:50%;
+}
+a {
+    color: cornflowerblue !important;
+}
+
+html {
+    height: 100%;
+}
+body {
+    height: 100%;
+}
+app {
+    height: 100%;
+}
+#main {
+    height: 100%;
+}
