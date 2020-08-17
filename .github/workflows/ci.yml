@@ -20,7 +20,7 @@ jobs:
 
         # Generate the website
         - name: Publish
-          run: dotnet publish CUIPortfolio.csproj --configuration Release
+          run: dotnet publish CUIPortfolio/CUIPortfolio.csproj --configuration Release
 
         # Publish the website
         - name: GitHub Pages action
