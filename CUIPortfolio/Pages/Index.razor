@@ -14,33 +14,7 @@
         </div>
         <div class="console">
             @*ここにコマンド出力*@
-            @switch (item)
-            {
-                case "help":
-                    <Help></Help>
-                    break;
-                case "bio":
-                    <Bio></Bio>
-                    break;
-                case "cls":
-                    Cls();
-                    break;
-                case "works":
-                    <Works></Works>
-                    break;
-                case "todomanager":
-                    <Todomanager></Todomanager>
-                    break;
-                case "twd3":
-                    <Twd3></Twd3>
-                    break;
-                case "daggerbreak":
-                    <Daggerbreak></Daggerbreak>
-                    break;
-                case "info":
-                    <Info></Info>
-                    break;
-            }
+            @SetCommand(item)
         </div>
     }
     else
@@ -70,7 +44,7 @@
 }
 
 @code{
-    string[] commands = { "help", "bio", "cls", "works", "todomanager", "twd3", "daggerbreak" ,"info"};
+    string[] commands = { "help", "bio", "cls", "works", "todomanager", "twd3", "daggerbreak", "info" };
     // ""が入力待ち行を示す
     List<string> console = new List<string>() { "" };
     string inputV;
@@ -120,5 +94,44 @@
         console.Clear();
         console.Add("");
         StateHasChanged();
+    }
+
+    /// <summary>
+    /// 入力(commandName)に対して対応するコマンドのRazorファイルを配置します
+    /// </summary>
+    /// <param name="commandName">表示するコマンド</param>
+    /// <returns></returns>
+    private RenderFragment SetCommand(string commandName)
+    {
+        RenderFragment rf = null;
+
+        @switch (commandName)
+        {
+            case "help":
+                rf =@<Help></Help>;
+                break;
+            case "bio":
+                rf = @<Bio></Bio>;
+                break;
+            case "cls":
+                Cls();
+                break;
+            case "works":
+                rf = @<Works></Works>;
+                break;
+            case "todomanager":
+                rf = @<Todomanager></Todomanager>;
+                break;
+            case "twd3":
+                rf = @<Twd3></Twd3>;
+                break;
+            case "daggerbreak":
+                rf = @<Daggerbreak></Daggerbreak>;
+                break;
+            case "info":
+                rf = @<Info></Info>;
+                break;
+         }
+        return rf;
     }
 }
