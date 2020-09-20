@@ -55,7 +55,7 @@
         {
             if (inputV == "") return;
             AddConsole();
-            StateHasChanged();
+            ChangeColorWithCommand();
         }
     }
 
@@ -72,7 +72,7 @@
     {
         if (commands.Contains(inputV))
         {
-            inputColor = "skyblue";
+            inputColor = Setting.commandColor;
         }
         else inputColor = "white";
     }
