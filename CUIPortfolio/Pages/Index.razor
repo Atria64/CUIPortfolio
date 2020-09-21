@@ -2,9 +2,9 @@
 @inject IJSRuntime JSRuntime;
 <p>Welcome to My CUIFoo app.</p>
 <BarParTime Time="0.5"></BarParTime>
-@foreach (var item in console.ToList())
+@foreach (string item in console.ToList())
 {
-    @if (commands.Contains(item))
+    @if (commands.Contains(item.Split(' ')[0]))
     {
         @*コマンド入力時*@
         <div class="console">
@@ -44,7 +44,7 @@
 }
 
 @code{
-    string[] commands = { "help", "bio", "cls", "works", "todomanager", "twd3", "daggerbreak", "info" };
+    string[] commands = { "help", "bio", "cls", "works", "todomanager", "twd3", "daggerbreak", "info","test" };
     // ""が入力待ち行を示す
     List<string> console = new List<string>() { "" };
     string inputV = "";
@@ -70,7 +70,7 @@
 
     private void ChangeColorWithCommand()
     {
-        if (commands.Contains(inputV))
+        if (commands.Contains(inputV.Split(' ')[0]))
         {
             inputColor = Setting.commandColor;
         }
@@ -97,15 +97,15 @@
     }
 
     /// <summary>
-    /// 入力(commandName)に対して対応するコマンドのRazorファイルを配置します
+    /// 入力(inputCommand)に対して対応するコマンドのRazorファイルを配置します
     /// </summary>
-    /// <param name="commandName">表示するコマンド</param>
+    /// <param name="inputCommand">表示するコマンド</param>
     /// <returns></returns>
-    private RenderFragment SetCommand(string commandName)
+    private RenderFragment SetCommand(string inputCommand)
     {
         RenderFragment rf = null;
 
-        @switch (commandName)
+        @switch (inputCommand.Split(' ')[0])
         {
             case "help":
                 rf =@<Help></Help>;
@@ -130,6 +130,9 @@
                 break;
             case "info":
                 rf = @<Info></Info>;
+                break;
+            case "test":
+                rf = @<CommandTest rawInput="@inputCommand"></CommandTest>;
                 break;
          }
         return rf;

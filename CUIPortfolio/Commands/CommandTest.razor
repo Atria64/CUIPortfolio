@@ -1,0 +1,15 @@
+﻿<p class="console">
+    command option is
+</p>
+@if (rawInput.Split(' ').Length > 1)
+{
+    <p>@rawInput.Split(' ')[1]</p> 
+}
+else
+{
+    <p>Nothing.</p>
+}
+@code {
+    [Parameter]
+    public string rawInput { get; set; }
+}
