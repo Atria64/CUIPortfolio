@@ -26,7 +26,7 @@
             @if (item == "")
             {
                 @*入力バー(最終行のみ)*@
-                <span><input id="commandLine" style="color:@inputColor" autocomplete="off" maxlength="30" type="url" @bind="inputV" @onkeyup="NextLine" @bind:event="oninput" /></span>
+                <span><input id="commandLine" style="color:@inputColor" autocomplete="off" maxlength="50" type="url" @bind="inputV" @onkeyup="NextLine" @bind:event="oninput" /></span>
             }
             else
             {
@@ -44,7 +44,7 @@
 }
 
 @code{
-    string[] commands = { "help", "bio", "cls", "works", "todomanager", "twd3", "daggerbreak", "info","test" };
+    string[] commands = { "help", "bio", "cls", "works", "todomanager", "twd3", "daggerbreak", "info", "test", "changecolor"};
     // ""が入力待ち行を示す
     List<string> console = new List<string>() { "" };
     string inputV = "";
@@ -133,6 +133,9 @@
                 break;
             case "test":
                 rf = @<CommandTest rawInput="@inputCommand"></CommandTest>;
+                break;
+            case "changecolor":
+                rf = @<ChangeColor rawInput="@inputCommand"></ChangeColor>;
                 break;
          }
         return rf;
