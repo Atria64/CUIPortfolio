@@ -10,7 +10,7 @@
         <div class="console">
             <span style="color:gold">atria </span>
             <span style="color:red">$</span>
-            <span style="color:@Setting.commandColor">@item</span>
+            <span style="color:@Setting.CommandColor">@item</span>
         </div>
         <div class="console">
             @*ここにコマンド出力*@
@@ -72,7 +72,7 @@
     {
         if (commands.Contains(inputV.Split(' ')[0]))
         {
-            inputColor = Setting.commandColor;
+            inputColor = Setting.CommandColor;
         }
         else inputColor = "white";
     }

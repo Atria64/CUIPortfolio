@@ -2,7 +2,7 @@
 @if (rawInput.Split(' ').Length < 2)
 {
     <p class="console">illegal option.</p>
-    <p class="console">require <span style="color:@Setting.commandColor">"changecolor {target} {color}"</span></p>
+    <p class="console">require <span style="color:@Setting.CommandColor">"changecolor {target} {color}"</span></p>
     <p class="console">example) changecolor command red</p>
     <p class="console">
         target ->
@@ -32,7 +32,7 @@ else@*正常な場合*@
         switch (input[1])
         {
             case "command":
-                Setting.commandColor = input[2];
+                Setting.CommandColor = input[2];
                 break;
         }
         return "Success.";

@@ -2,6 +2,6 @@
 {
     static public class Setting
     {
-        public static string commandColor { get; set; } = "skyblue";
+        public static string CommandColor { get; set; } = "skyblue";
     }
 }
