@@ -1,0 +1,20 @@
+﻿[
+  {
+    "name": "ToDoManager",
+    "language": [ "cs", "html+razor", "css", "js" ],
+    "description": "Blazor製タスク管理Webアプリ",
+    "command": "todomanager"
+  },
+  {
+    "name": "TwD3",
+    "language": [ "js" ],
+    "description": "TweetDeckの2窓検知を行うGoogleChrome拡張",
+    "command": "twd3"
+  },
+  {
+    "name": "ToDoManager",
+    "language": [ "processing" ],
+    "description": "ブロック崩しゲーム",
+    "command": "daggerbreak"
+  }
+]
