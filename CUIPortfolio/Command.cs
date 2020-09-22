@@ -7,15 +7,9 @@ namespace CUIPortfolio
 {
     public class Command
     {
-        public Command(string name, string explanation)
-        {
-            Name = name;
-            Explanation = explanation;
-        }
-
         //コマンド名
-        public string Name { get; private set; }
+        public string Name { get; set; }
         //コマンドの動作内容
-        public string Explanation { get; private set; }
+        public string Discription { get; set; }
     }
 }

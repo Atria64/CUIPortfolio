@@ -1,5 +1,21 @@
-﻿<p class="console">help : これ</p>
-<p class="console">bio : プロフィールを表示します</p>
-<p class="console">works : 作ったものを表示します</p>
-<p class="console">info : このサイトについての情報を表示します</p>
-<p class="console">cls : コンソールをクリアします</p>
+﻿@inject HttpClient Http
+@if (commands == null)
+{
+    <p class="console">Loading...</p>
+}
+else
+{
+    @foreach (var item in commands)
+	{
+		 <p class="console"><span style="color:@Setting.CommandColor;">@item.Name</span> -> <span style="color:white">@item.Discription</span></p>
+	}
+}
+@code{
+    private Command[] commands;
+
+    protected override async Task OnInitializedAsync()
+    {
+        commands = await Http.GetFromJsonAsync<Command[]>("commands.json");
+    }
+
+}

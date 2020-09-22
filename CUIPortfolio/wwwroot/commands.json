@@ -1,0 +1,26 @@
+﻿[
+  {
+    "name": "help",
+    "discription": "各種コマンドの説明を行います"
+  },
+  {
+    "name": "bio",
+    "discription": "プロフィールを表示します"
+  },
+  {
+    "name": "works",
+    "discription": "今までの制作物の情報を表示します"
+  },
+  {
+    "name": "info",
+    "discription": "このサイトについての各種情報を表示します"
+  },
+  {
+    "name": "cls",
+    "discription": "コンソールをクリアします"
+  },
+  {
+    "name": "changecolor {target} {color}",
+    "discription": "{target} の色を変更します。changecolor単体で詳しい使用方法を表示します"
+  }
+]
