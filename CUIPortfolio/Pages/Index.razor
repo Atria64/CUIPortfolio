@@ -3,14 +3,18 @@
 <p>Welcome to My CUIFoo app.</p>
 <BarParTime Time="0.5"></BarParTime>
 
+@*Inputsがなにもない場合の処理*@
 @if (ConsoleManager.Inputs.Count == 0)
 {
-    <Console Input=""></Console>
+    <ConsoleComponent Input=""></ConsoleComponent>
 }
-
-@foreach (string item in ConsoleManager.Inputs.ToList())
+else
 {
-    <Console Input="@item"></Console>
+    @*Inputsの中身がある場合,Consoleに要素を与えて列挙する*@
+    @foreach (string item in ConsoleManager.Inputs.ToList())
+    {
+        <ConsoleComponent Input="@item"></ConsoleComponent>
+    }
 }
 
 @code{
@@ -18,15 +22,19 @@
     {
         if (firstRender)
         {
-            ConsoleManager.ListChanged += new EventHandler(Update);
+            ConsoleManager.ListChanged += new EventHandler(InputsUpdate);
         }
-        //次の行に自動で移動する
-        //内部的には次のinputにFocus()しているのみなので、ボタンクリックなどに支障はない(はず)
+        //次の行に自動で移動し、スクロールする
         await JSRuntime.InvokeVoidAsync("focusCommandLine");
         await JSRuntime.InvokeVoidAsync("autoScroll");
     }
 
-    private void Update(object sender, EventArgs e)
+    /// <summary>
+    /// ConsoleManager.Inputsが更新されたときのイベントハンドラ
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="e"></param>
+    private void InputsUpdate(object sender, EventArgs e)
     {
         StateHasChanged();
     }
