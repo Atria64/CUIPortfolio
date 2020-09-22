@@ -5,18 +5,47 @@
 }
 else
 {
-    <p class="console" style="color:limegreen">| Works</p>
-    @foreach (var item in works)
+    @*オプションあり*@
+    @if (rawInput.Split(' ').Length > 1)
     {
-        <p class="console" style="color:navajowhite">
-            |- @item.Name [ @String.Join(", ",item.Language.Select(x => LangageNameConvartUserLike(x))) ] :
-            <span class="console">@item.Description</span>
-            <span class="console" style="color:skyblue;">[cmd : @item.Command]</span>
-        </p>
+        <p class="console" style="color:limegreen">| Works (Language -> "@rawInput.Split(' ')[1]")</p>
+        @if (works.Any(x => x.Language.Contains(rawInput.Split(' ')[1])))
+        {
+            @foreach (var item in works.Where(x => x.Language.Contains(rawInput.Split(' ')[1])))
+            {
+                <p class="console" style="color:navajowhite">
+                    |- @item.Name [ @String.Join(", ", item.Language.Select(x => LangageNameConvartUserLike(x))) ] :
+                    <span class="console">@item.Description</span>
+                    <span class="console" style="color:@Setting.CommandColor;">[cmd : @item.Command]</span>
+                </p>
+            }
+        }
+        else
+        {
+            <p class="console">@rawInput.Split(' ')[1] によって開発されたプロダクトは見つかりませんでした。</p>
+            <p class="console">受け入れている言語オプション -> <span class="console" style="color:@Setting.CommandColor;">{ cs, js, html+razor, css, processing }</span></p>
+        }
+    }
+    else @*オプションなし*@
+    {
+        <p class="console" style="color:limegreen">| Works</p>
+        @foreach (var item in works)
+        {
+            <p class="console" style="color:navajowhite">
+                |- @item.Name [ @String.Join(", ", item.Language.Select(x => LangageNameConvartUserLike(x))) ] :
+                <span class="console">@item.Description</span>
+                <span class="console" style="color:skyblue;">[cmd : @item.Command]</span>
+            </p>
+        }
+        <p class="console"><span style="font-weight:bold;color:gold;">Tips</span> : works {language} で言語による絞り込みが可能です</p>
     }
 }
 
 @code {
+
+    [Parameter]
+    public string rawInput { get; set; }
+
     private Work[] works;
 
     protected override async Task OnInitializedAsync()
