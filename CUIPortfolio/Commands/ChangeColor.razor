@@ -1,0 +1,46 @@
+﻿@*オプション入力なし or 多すぎるの場合*@
+@if (rawInput.Split(' ').Length < 2)
+{
+    <p class="console">illegal option.</p>
+    <p class="console">require <span style="color:@Setting.CommandColor">"changecolor {target} {color}"</span></p>
+    <p class="console">example) changecolor command red</p>
+    <p class="console">
+        target ->
+        @foreach (var item in targets)
+        {
+            <span> @item </span>
+        }
+    </p>
+}
+else@*正常な場合*@
+{
+    <p class="console">@TryChangeColor()</p>
+}
+
+@code {
+    [Parameter]
+    public string rawInput { get; set; }
+
+    private string[] targets = { "dollar", "name","command", };
+
+    private string TryChangeColor()
+    {
+        var input = rawInput.Split(' ');
+        if (!targets.Contains(input[1])) return "The value of {target} is incorrect.";
+        if (!Enum.GetNames(typeof(System.Drawing.KnownColor)).Select(x => x.ToLower()).Contains(input[2].ToLower())) return "The value of {color} is incorrect.";
+
+        switch (input[1])
+        {
+            case "dollar":
+                Setting.DollarMarkColor = input[2];
+                break;
+            case "name":
+                Setting.NameColor = input[2];
+                break;
+            case "command":
+                Setting.CommandColor = input[2];
+                break;
+        }
+        return "Success.";
+    }
+}

@@ -1,0 +1,124 @@
+﻿@if (commands.Contains(Input.Split(' ')[0]))
+{
+    @*コマンド入力時*@
+    <div class="console">
+        <span style="color:@Setting.NameColor">atria </span>
+        <span style="color:@Setting.DollarMarkColor">$</span>
+        <span style="color:@Setting.CommandColor">@Input</span>
+    </div>
+    <div class="console">
+        @*ここにコマンド出力*@
+        @SetCommand(Input)
+    </div>
+}
+else
+{
+    @*コマンド以外入力時*@
+    <div class="console">
+        <span style="color:@Setting.NameColor">atria </span>
+        <span style="color:@Setting.DollarMarkColor">$</span>
+        @if (Input == "")
+        {
+            @*入力バー(最終行のみ)*@
+            <span><input id="commandLine" style="color:@inputColor" autocomplete="off" maxlength="50" type="url" @bind="inputV" @onkeyup="NextLine" @bind:event="oninput" /></span>
+        }
+        else
+        {
+            <span style="color:white">@Input</span>
+
+            @if (Input != "")
+            {
+                <div>
+                    <span style="color:white">@Input : Unknown Command. Recommend "help".</span>
+                </div>
+            }
+        }
+    </div>
+}
+
+@code {
+    [Parameter]
+    public string Input { get; set; }
+
+    string[] commands = { "help", "bio", "cls", "works", "todomanager", "twd3", "daggerbreak", "info", "test", "changecolor" };
+
+    private string inputV = "";//<input>の値
+    private string inputColor = "white";
+
+    private void NextLine(KeyboardEventArgs args)
+    {
+        if (args.Key == "Enter")
+        {
+            if (inputV == "") return;
+
+            ConsoleManager.AddElement(inputV);
+            var s = ConsoleManager.Inputs;
+            ChangeColorWithCommand();
+        }
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+        }
+        ChangeColorWithCommand();
+    }
+
+    /// <summary>
+    /// コマンドを認識した場合にフォントの色を変更します
+    /// </summary>
+    private void ChangeColorWithCommand()
+    {
+        if (commands.Contains(inputV.Split(' ')[0]))
+        {
+            inputColor = Setting.CommandColor;
+        }
+        else inputColor = "white";
+    }
+
+    /// <summary>
+    /// 入力(inputCommand)に対して対応するコマンドのRazorファイルを配置します
+    /// </summary>
+    /// <param name="inputCommand">表示するコマンド</param>
+    /// <returns></returns>
+    private RenderFragment SetCommand(string inputCommand)
+    {
+        RenderFragment rf = null;
+
+        @switch (inputCommand.Split(' ')[0])
+        {
+            case "help":
+                rf =@<Help></Help>;
+                break;
+            case "bio":
+                rf = @<Bio></Bio>;
+                break;
+            case "cls":
+                ConsoleManager.Clear();
+                break;
+            case "works":
+                rf = @<Works></Works>;
+                break;
+            case "todomanager":
+                rf = @<Todomanager></Todomanager>;
+                break;
+            case "twd3":
+                rf = @<Twd3></Twd3>;
+                break;
+            case "daggerbreak":
+                rf = @<Daggerbreak></Daggerbreak>;
+                break;
+            case "info":
+                rf = @<Info></Info>;
+                break;
+            case "test":
+                rf = @<CommandTest rawInput="@inputCommand"></CommandTest>;
+                break;
+            case "changecolor":
+                rf = @<ChangeColor rawInput="@inputCommand"></ChangeColor>;
+                break;
+         }
+        return rf;
+    }
+}
