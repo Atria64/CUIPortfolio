@@ -2,142 +2,32 @@
 @inject IJSRuntime JSRuntime;
 <p>Welcome to My CUIFoo app.</p>
 <BarParTime Time="0.5"></BarParTime>
-@foreach (string item in console.ToList())
-{
-    @if (commands.Contains(item.Split(' ')[0]))
-    {
-        @*コマンド入力時*@
-        <div class="console">
-            <span style="color:@Setting.NameColor">atria </span>
-            <span style="color:@Setting.DollarMarkColor">$</span>
-            <span style="color:@Setting.CommandColor">@item</span>
-        </div>
-        <div class="console">
-            @*ここにコマンド出力*@
-            @SetCommand(item)
-        </div>
-    }
-    else
-    {
-        @*コマンド以外入力時*@
-        <div class="console">
-            <span style="color:@Setting.NameColor">atria </span>
-            <span style="color:@Setting.DollarMarkColor">$</span>
-            @if (item == "")
-            {
-                @*入力バー(最終行のみ)*@
-                <span><input id="commandLine" style="color:@inputColor" autocomplete="off" maxlength="50" type="url" @bind="inputV" @onkeyup="NextLine" @bind:event="oninput" /></span>
-            }
-            else
-            {
-                <span style="color:white">@item</span>
 
-                @if (item != "")
-                {
-                    <div>
-                        <span style="color:white">@item : Unknown Command. Recommend "help".</span>
-                    </div>
-                }
-            }
-        </div>
-    }
+@if (ConsoleManager.Inputs.Count == 0)
+{
+    <Console Input=""></Console>
+}
+
+@foreach (string item in ConsoleManager.Inputs.ToList())
+{
+    <Console Input="@item"></Console>
 }
 
 @code{
-    string[] commands = { "help", "bio", "cls", "works", "todomanager", "twd3", "daggerbreak", "info", "test", "changecolor"};
-    // ""が入力待ち行を示す
-    List<string> console = new List<string>() { "" };
-    string inputV = "";
-    string inputColor = "white";
-    private void NextLine(KeyboardEventArgs args)
-    {
-        if (args.Key == "Enter")
-        {
-            if (inputV == "") return;
-            AddConsole();
-            ChangeColorWithCommand();
-        }
-    }
-
-    /// <summary>
-    /// inputVをListに挿入する関数
-    /// </summary>
-    private void AddConsole()
-    {
-        console.Insert(console.Count - 1, inputV);
-        inputV = "";//input内を空に初期化
-    }
-
-    private void ChangeColorWithCommand()
-    {
-        if (commands.Contains(inputV.Split(' ')[0]))
-        {
-            inputColor = Setting.CommandColor;
-        }
-        else inputColor = "white";
-    }
-
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
+            ConsoleManager.ListChanged += new EventHandler(Update);
         }
-        ChangeColorWithCommand();
         //次の行に自動で移動する
         //内部的には次のinputにFocus()しているのみなので、ボタンクリックなどに支障はない(はず)
         await JSRuntime.InvokeVoidAsync("focusCommandLine");
         await JSRuntime.InvokeVoidAsync("autoScroll");
     }
 
-    private void Cls()
+    private void Update(object sender, EventArgs e)
     {
-        console.Clear();
-        console.Add("");
         StateHasChanged();
-    }
-
-    /// <summary>
-    /// 入力(inputCommand)に対して対応するコマンドのRazorファイルを配置します
-    /// </summary>
-    /// <param name="inputCommand">表示するコマンド</param>
-    /// <returns></returns>
-    private RenderFragment SetCommand(string inputCommand)
-    {
-        RenderFragment rf = null;
-
-        @switch (inputCommand.Split(' ')[0])
-        {
-            case "help":
-                rf =@<Help></Help>;
-                break;
-            case "bio":
-                rf = @<Bio></Bio>;
-                break;
-            case "cls":
-                Cls();
-                break;
-            case "works":
-                rf = @<Works></Works>;
-                break;
-            case "todomanager":
-                rf = @<Todomanager></Todomanager>;
-                break;
-            case "twd3":
-                rf = @<Twd3></Twd3>;
-                break;
-            case "daggerbreak":
-                rf = @<Daggerbreak></Daggerbreak>;
-                break;
-            case "info":
-                rf = @<Info></Info>;
-                break;
-            case "test":
-                rf = @<CommandTest rawInput="@inputCommand"></CommandTest>;
-                break;
-            case "changecolor":
-                rf = @<ChangeColor rawInput="@inputCommand"></ChangeColor>;
-                break;
-         }
-        return rf;
     }
 }
