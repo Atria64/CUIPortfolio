@@ -8,8 +8,8 @@
     {
         @*コマンド入力時*@
         <div class="console">
-            <span style="color:gold">atria </span>
-            <span style="color:red">$</span>
+            <span style="color:@Setting.NameColor">atria </span>
+            <span style="color:@Setting.DollarMarkColor">$</span>
             <span style="color:@Setting.CommandColor">@item</span>
         </div>
         <div class="console">
@@ -21,8 +21,8 @@
     {
         @*コマンド以外入力時*@
         <div class="console">
-            <span style="color:gold">atria </span>
-            <span style="color:red">$</span>
+            <span style="color:@Setting.NameColor">atria </span>
+            <span style="color:@Setting.DollarMarkColor">$</span>
             @if (item == "")
             {
                 @*入力バー(最終行のみ)*@

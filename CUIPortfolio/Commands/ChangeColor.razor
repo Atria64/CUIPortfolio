@@ -21,7 +21,7 @@ else@*正常な場合*@
     [Parameter]
     public string rawInput { get; set; }
 
-    private string[] targets = { "command" };
+    private string[] targets = { "dollar", "name","command", };
 
     private string TryChangeColor()
     {
@@ -31,6 +31,12 @@ else@*正常な場合*@
 
         switch (input[1])
         {
+            case "dollar":
+                Setting.DollarMarkColor = input[2];
+                break;
+            case "name":
+                Setting.NameColor = input[2];
+                break;
             case "command":
                 Setting.CommandColor = input[2];
                 break;
