@@ -1,17 +1,81 @@
-﻿<p class="console" style="color:limegreen">| Works</p>
-@foreach (var item in works)
+﻿@inject HttpClient Http
+@if (works == null)
 {
-    <p class="console" style="color:navajowhite">
-        |- @item.Name (@item.Language[0]) :
-        <span class="console">@item.Description</span>
-        <span class="console" style="color:skyblue;">[cmd : @item.Command]</span>
-    </p>
+    <p class="console">Loading...</p>
+}
+else
+{
+    @*オプションあり*@
+    @if (rawInput.Split(' ').Length > 1)
+    {
+        <p class="console" style="color:limegreen">| Works (Language -> "@rawInput.Split(' ')[1]")</p>
+        @if (works.Any(x => x.Language.Contains(rawInput.Split(' ')[1])))
+        {
+            @foreach (var item in works.Where(x => x.Language.Contains(rawInput.Split(' ')[1])))
+            {
+                <p class="console" style="color:navajowhite">
+                    |- @item.Name [ @String.Join(", ", item.Language.Select(x => LangageNameConvartUserLike(x))) ] :
+                    <span class="console">@item.Description</span>
+                    @if (!(item.Command == ""))//詳細コマンドが存在する場合のみ表示
+                    {
+                        <span class="console" style="color:@Setting.CommandColor;">[ 詳細コマンド : @item.Command </span>
+                    }
+                </p>
+            }
+        }
+        else
+        {
+            <p class="console">@rawInput.Split(' ')[1] によって開発されたプロダクトは見つかりませんでした。</p>
+            <p class="console">受け入れている言語オプション -> <span class="console" style="color:@Setting.CommandColor;">{ cs, js, html+razor, css, processing, vba }</span></p>
+        }
+    }
+    else @*オプションなし*@
+    {
+        <p class="console" style="color:limegreen">| Works</p>
+        @foreach (var item in works)
+        {
+            <p class="console" style="color:navajowhite">
+                |- @item.Name [ @String.Join(", ", item.Language.Select(x => LangageNameConvartUserLike(x))) ] :
+                <span class="console">@item.Description</span>
+                @if (!(item.Command == ""))//詳細コマンドが存在する場合のみ表示
+                {
+                    <span class="console" style="color:@Setting.CommandColor;">[ 詳細コマンド : @item.Command ]</span>
+                }
+            </p>
+        }
+        <p class="console"><span style="font-weight:bold;color:gold;">Tips</span> : works {language} で言語による絞り込みが可能です</p>
+    }
 }
 
 @code {
-    private List<Work> works = new List<Work>(){
-        new Work("ToDoManager",new List<string>(){"C#,Html+razor","css","JavaScript"},"Blazor製タスク管理Webアプリ","todomanager"),
-        new Work("TwD3",new List<string>(){"JavaScript"},"TweetDeckの2窓検知を行うGoogleChrome拡張","twd3"),
-        new Work("Dagger Break",new List<string>(){"Processing"},"ブロック崩しゲーム","daggerbreak"),
-    };
+
+    [Parameter]
+    public string rawInput { get; set; }
+
+    private Work[] works;
+
+    protected override async Task OnInitializedAsync()
+    {
+        works = await Http.GetFromJsonAsync<Work[]>("works.json");
+    }
+
+    private string LangageNameConvartUserLike(string str)
+    {
+        switch (str)
+        {
+            case "cs":
+                return "C#";
+            case "js":
+                return "JavaScript";
+            case "html+razor":
+                return "HTML+Razor";
+            case "css":
+                return "CSS";
+            case "processing":
+                return "Processing";
+            case "vba":
+                return "Visual Basic for Applications";
+        }
+        return "?unknown?";
+    }
 }

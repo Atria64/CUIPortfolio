@@ -1,0 +1,38 @@
+﻿[
+  {
+    "name": "ToDoManager",
+    "language": [ "cs", "html+razor", "css", "js" ],
+    "description": "Blazor製タスク管理Webアプリ",
+    "command": "todomanager"
+  },
+  {
+    "name": "N才Nヶ月計算",
+    "language": [ "cs", "html+razor", "css", "js" ],
+    "description": "N才Nヶ月を計算するC#製Blazor-WebAssembly App",
+    "command": ""
+  },
+  {
+    "name": "TwD3",
+    "language": [ "js" ],
+    "description": "TweetDeckの2窓検知を行うGoogleChrome拡張",
+    "command": "twd3"
+  },
+  {
+    "name": "DaggerBreak",
+    "language": [ "processing" ],
+    "description": "ブロック崩しゲーム",
+    "command": "daggerbreak"
+  },
+  {
+    "name": "PptTimerAddin",
+    "language": [ "cs" ],
+    "description": "PowerPointのプレゼンテーションにタイマーを追加するアドイン",
+    "command": ""
+  },
+  {
+    "name": "講師シフト管理システム(Excel)",
+    "language": [ "vba" ],
+    "description": "某個別学習塾のシフト管理システムをVBAで作成しました",
+    "command": ""
+  }
+]

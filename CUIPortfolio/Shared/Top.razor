@@ -9,6 +9,9 @@
 <hr style="color:white;background-color:white;" />
 
 @code {
+    //レンダリングの回避
+    protected override bool ShouldRender() => false;
+
     string[] menu = {"atriasoft.work", "GitHub" };
 
     private void Click(int index)
@@ -19,7 +22,7 @@
                 UrlOpenNewWindow("http://atriasoft.work/");
                 break;
             case "GitHub":
-                UrlOpenNewWindow("https://github.com/Atria64");
+                UrlOpenNewWindow("https://github.com/Atria64/CUIPortfolio");
                 break;
             default:
                 menu[index] = "clicked";
@@ -27,6 +30,10 @@
         }
     }
 
+    /// <summary>
+    /// 与えられたURLを既定のウィンドウで新しく開きます
+    /// </summary>
+    /// <param name="url"></param>
     private async void UrlOpenNewWindow(string url)
     {
         await JSRuntime.InvokeVoidAsync("open", url, "_blank");
