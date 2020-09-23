@@ -45,6 +45,7 @@ else
     private string inputV = "";//<input>の値
     private string inputColor = "white";
 
+    private int HistoryIndex = ConsoleManager.Inputs.Count - 1;//ヒストリー機能で使用する
     private void NextLine(KeyboardEventArgs args)
     {
         if (args.Key == "Enter")
@@ -53,14 +54,23 @@ else
 
             ConsoleManager.AddElement(inputV);
             var s = ConsoleManager.Inputs;
-            ChangeColorWithCommand();
         }
-    }
-
-    protected override void OnAfterRender(bool firstRender)
-    {
-        if (firstRender)
+        //以下↑↓キーによるヒストリー処理
+        else if (args.Key == "ArrowUp")
         {
+            if (HistoryIndex > 0)
+            {
+                HistoryIndex--;
+                inputV = ConsoleManager.Inputs[HistoryIndex];
+            }
+        }
+        else if (args.Key == "ArrowDown")
+        {
+            if (HistoryIndex < ConsoleManager.Inputs.Count - 1)
+            {
+                HistoryIndex++;
+                inputV = ConsoleManager.Inputs[HistoryIndex];
+            }
         }
         ChangeColorWithCommand();
     }
