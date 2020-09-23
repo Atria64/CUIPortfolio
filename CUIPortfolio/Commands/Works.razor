@@ -16,7 +16,10 @@ else
                 <p class="console" style="color:navajowhite">
                     |- @item.Name [ @String.Join(", ", item.Language.Select(x => LangageNameConvartUserLike(x))) ] :
                     <span class="console">@item.Description</span>
-                    <span class="console" style="color:@Setting.CommandColor;">[cmd : @item.Command]</span>
+                    @if (!(item.Command == ""))//詳細コマンドが存在する場合のみ表示
+                    {
+                        <span class="console" style="color:@Setting.CommandColor;">[ 詳細コマンド : @item.Command </span>
+                    }
                 </p>
             }
         }
@@ -34,7 +37,10 @@ else
             <p class="console" style="color:navajowhite">
                 |- @item.Name [ @String.Join(", ", item.Language.Select(x => LangageNameConvartUserLike(x))) ] :
                 <span class="console">@item.Description</span>
-                <span class="console" style="color:skyblue;">[cmd : @item.Command]</span>
+                @if (!(item.Command == ""))//詳細コマンドが存在する場合のみ表示
+                {
+                    <span class="console" style="color:@Setting.CommandColor;">[ 詳細コマンド : @item.Command ]</span>
+                }
             </p>
         }
         <p class="console"><span style="font-weight:bold;color:gold;">Tips</span> : works {language} で言語による絞り込みが可能です</p>
