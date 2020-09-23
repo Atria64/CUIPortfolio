@@ -26,7 +26,7 @@ else
         else
         {
             <p class="console">@rawInput.Split(' ')[1] によって開発されたプロダクトは見つかりませんでした。</p>
-            <p class="console">受け入れている言語オプション -> <span class="console" style="color:@Setting.CommandColor;">{ cs, js, html+razor, css, processing }</span></p>
+            <p class="console">受け入れている言語オプション -> <span class="console" style="color:@Setting.CommandColor;">{ cs, js, html+razor, css, processing, vba }</span></p>
         }
     }
     else @*オプションなし*@
@@ -73,6 +73,8 @@ else
                 return "CSS";
             case "processing":
                 return "Processing";
+            case "vba":
+                return "Visual Basic for Applications";
         }
         return "?unknown?";
     }
