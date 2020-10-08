@@ -6,10 +6,15 @@ CUI風のポートフォリオをC#/Blazorで制作しました。
 
 https://atria64.github.io/CUIPortfolio/
 
-また、バグなどを発見された場合は[Issue](https://github.com/Atria64/CUIPortfolio/issues/new/choose)に書き込んでいただけると嬉しいです。
+また、バグなどを発見された場合は[Issue](https://github.com/Atria64/CUIPortfolio/issues/new/choose)に書き込んでいただけると嬉しいです。   
+Starを頂けるともっと嬉しいです。
 
 ## 使用したもの
 
  - Microsoft C-Sharp 8.0
  - ASP.NET Core 3.1
  - Blazor WebAssembly 3.2.0
+
+## 協力
+[lukehaas/css-loaders: A collection of loading spinners animated with CSS](https://github.com/lukehaas/css-loaders)   
+-> ローディングアニメーションをお借りしました
