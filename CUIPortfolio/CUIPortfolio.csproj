@@ -9,7 +9,7 @@
     <PackageId>CUIPortfolio</PackageId>
     <AssemblyName>CUIPortfolio</AssemblyName>
     <RootNamespace>CUIPortfolio</RootNamespace>
-    <AssemblyVersion>1.2.0.0</AssemblyVersion>
+    <AssemblyVersion>1.2.0.1</AssemblyVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
