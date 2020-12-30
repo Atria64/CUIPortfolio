@@ -40,7 +40,7 @@ else
     [Parameter]
     public string Input { get; set; }
 
-    string[] commands = { "help", "bio", "cls", "works", "todomanager", "twd3", "daggerbreak", "info", "test", "changecolor" };
+    string[] commands = { "help", "bio", "cls", "works", "todomanager", "twd3", "daggerbreak", "info", "test", "changecolor","markdownug" };
 
     private string inputV = "";//<input>の値
     private string inputColor = "white";
@@ -118,6 +118,9 @@ else
                 break;
             case "daggerbreak":
                 rf = @<Daggerbreak></Daggerbreak>;
+                break;
+            case "markdownug":
+                rf = @<MarkdownUrlGenerator></MarkdownUrlGenerator>;
                 break;
             case "info":
                 rf = @<Info></Info>;

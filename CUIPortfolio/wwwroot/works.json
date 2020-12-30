@@ -34,5 +34,11 @@
     "language": [ "vba" ],
     "description": "某個別学習塾のシフト管理システムをVBAで作成しました",
     "command": ""
+  },
+  {
+    "name": "MarkdownUrlGenerator",
+    "language": [ "js" ],
+    "description": "WebサイトをGitHubマークダウンリンクとして出力するGoogleChrome用ブックマークレット",
+    "command": "markdownug"
   }
 ]
