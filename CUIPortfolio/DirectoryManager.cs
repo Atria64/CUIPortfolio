@@ -7,7 +7,7 @@ namespace CUIPortfolio
 {
     public class DirectoryManager
     {
-        Directory directory;
+        public Directory directory { get; set; }
         public DirectoryManager()
         {
             directory = new Directory("atria");

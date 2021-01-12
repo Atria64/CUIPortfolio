@@ -1,0 +1,29 @@
+﻿<p class="console">
+    <span style="color:yellow;">@ShowCommandNames()</span><span style="color:skyblue">@ShowDirectoryNames()</span> 
+</p>
+
+@code {
+    [Parameter]
+    public DirectoryManager directoryManager { get; set; }
+
+    private string ShowCommandNames()
+    {
+        System.Text.StringBuilder sb = new System.Text.StringBuilder();
+        @foreach (var item in directoryManager.directory.Commands)
+        {
+            sb.Append(item.Name + " ");
+        }
+        return sb.ToString();
+    }
+
+
+    private string ShowDirectoryNames()
+    {
+        System.Text.StringBuilder sb = new System.Text.StringBuilder();
+        @foreach (var item in directoryManager.directory.Children)
+        {
+            sb.Append(item.DirectoryName + " ");
+        }
+        return sb.ToString();
+    }
+}

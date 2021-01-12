@@ -6,18 +6,24 @@
 @*Inputsがなにもない場合の処理*@
 @if (ConsoleManager.Inputs.Count == 0)
 {
-    <ConsoleComponent Input=""></ConsoleComponent>
+    <ConsoleComponent Input="" directoryManager="@DirectoryManager"></ConsoleComponent>
 }
 else
 {
     @*Inputsの中身がある場合,Consoleに要素を与えて列挙する*@
     @foreach (string item in ConsoleManager.Inputs.ToList())
     {
-        <ConsoleComponent Input="@item"></ConsoleComponent>
+        <ConsoleComponent Input="@item" directoryManager="@DirectoryManager"></ConsoleComponent>
     }
 }
 
 @code{
+    DirectoryManager DirectoryManager;
+    protected override void OnInitialized()
+    {
+        DirectoryManager = new DirectoryManager();
+    }
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
